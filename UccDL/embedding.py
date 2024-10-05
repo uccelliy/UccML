@@ -1,3 +1,4 @@
+import torch
 from torch import nn
 import torch.nn.functional as F
 import math
@@ -28,7 +29,7 @@ class TransformerEmbedding(nn.Module):
         self.tok_emb=TokenEmbedding(vocab_size,d_modal)
         self.pos_emb=PositionalEmbedding(d_modal,max_len,device)
         self.drop_out=nn.Dropout(p=drop_prob)
-        def forward(self.x):
+        def forward(self,x):
             tok_emb=self.tok_emb(x)
             pos_emb=self.pos_emb(x)
             return self.drop_out(tok_emb+pos_emb)
