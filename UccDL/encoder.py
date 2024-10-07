@@ -38,7 +38,7 @@ class EncoderLayer(nn.Module):
         return x
     
 class Encoder(nn.Module):
-    def __init__(self,enc_voc_size,max_len,d_model,ffn_hidden,n_head,n_layers,dropout=0.1,device):
+    def __init__(self,enc_voc_size,max_len,d_model,ffn_hidden,n_head,n_layers,device,dropout=0.1,):
         super(Encoder,self).__init__()
         self.embedding=Embedding.TeanserEmbedding(enc_voc_size,d_model,max_len,dropout,device)
         self.layers=nn.ModuleList([EncoderLayer(d_model,ffn_hidden,n_head,device) for _ in range(n_layers)])
