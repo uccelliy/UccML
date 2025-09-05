@@ -1,12 +1,17 @@
-# README 
-This is a collection of code during my study of machine learning. It consists of reproducing code from the paper and some classic algroithm code implementation. 
-## classic machine learning method
-SVM
 
-Decision Tree
-## deep learning
-transformer
+UccML is a lightweight deep learning library that implements both basic neural network modules and full neural network architectures. It is designed for learning, experimentation, and extensibility.
 
-GPT2
-## reinforcement learning
-## other algroithm
+##Features
+###1. Neural Network Modules
+
+Convolutional Neural Networks (CNN)
+
+Recurrent Neural Networks (RNN)
+
+Attention Mechanisms
+
+###2. Neural Network Architectures
+
+Transformer
+
+GPT-2
