@@ -21,6 +21,77 @@ print(type_num.size)
 print(type_num.index)
 print(Data.shape[0])
 
+class DescionTree:
+    def __init__(self,method,prune_method):
+        self.tree = None
+        self.method = method
+        self.prune_method = prune_method
+           
+    def _create_tree_(self,data):
+        # if prune_method == 'forward':
+        #     #forward prune
+        #     pass
+        # elif prune_method == 'backward':
+        #     #backward prune
+        #     pass
+        feature_num = data.columns.size-1
+        labels = data.iloc[:,-1].value_counts()
+        if labels.size == 1:
+            return labels.index[0]
+        if feature_num == 0:
+            return labels.idxmax()
+        feature_tmp,val_tmp,val_dict_tmp = self.method(data)
+        tree = {feature_tmp:{}}
+        for value in data[feature_tmp].value_counts().index:
+            mask_i = data[feature_tmp]==value
+            data_i = data[mask_i].drop(columns=feature_tmp)
+            if data_i.shape[0] == 0:
+                tree[feature_tmp][value]=labels.idxmax()
+            else: 
+                tree[feature_tmp][value]=self._create_tree_(data_i)        
+        return tree
+    
+    def fit(self,X,y):
+        data = pd.concat([X,y],axis=1)
+        self.tree = self._create_tree_(data)
+        return self.tree
+    
+    def _predict_(self,tree,sample):
+        if not isinstance(tree,dict):
+            return tree
+        feature = next(iter(tree))
+        feature_value = sample[feature]
+        if feature_value in tree[feature]:
+            subtree = tree[feature][feature_value]
+            return self._predict_(subtree,sample)
+        else:
+            subtrees = tree[feature].values()
+            leaves = []
+            for subtree in subtrees:
+                leaves.extend(collect_leaves(subtree))
+            if leaves:
+                return pd.Series(leaves).value_counts().idxmax()
+            else:
+                return None
+        
+    def predict(self,X):
+        # y_pred = []
+        # for i in range(X.shape[0]):
+        #     sample = X.iloc[i,:]
+        #     pred = self._predict_(self.tree,sample)
+        #     y_pred.append(pred)
+        # return np.array(y_pred)
+        y_pred = X.apply(lambda row: self._predict_(self.tree, row), axis=1).to_numpy()
+        return y_pred
+        
+def collect_leaves(tree):
+    if not isinstance(tree, dict):
+        return [tree]
+    leaves = []
+    for subtree in tree.values():
+        leaves.extend(collect_leaves(subtree))
+    return leaves
+
 def entropy(data_tmp):
     data_num = data_tmp.shape[0]
     type_num = data_tmp.iloc[:,-1].value_counts()
@@ -83,30 +154,6 @@ def Gini(data_tmp):
     best_feature_name= min(gini_dict, key=gini_dict.get)
     best_gini = gini_dict[best_feature_name]
     return best_feature_name,best_gini,gini_dict
-
-def CreateTree(data,method=Gini, prune_method='forward'):
-    # if prune_method == 'forward':
-    #     #forward prune
-    #     pass
-    # elif prune_method == 'backward':
-    #     #backward prune
-    #     pass
-    feature_num = data.columns.size-1
-    labels = data.iloc[:,-1].value_counts()
-    if labels.size == 1:
-        return labels.index[0]
-    if feature_num == 0:
-        return labels.idxmax()
-    feature_tmp,val_tmp,val_dict_tmp = method(data)
-    tree = {feature_tmp:{}}
-    for value in data[feature_tmp].value_counts().index:
-        mask_i = data[feature_tmp]==value
-        data_i = data[mask_i].drop(columns=feature_tmp)
-        if data_i.shape[0] == 0:
-            tree[feature_tmp][value]=labels.idxmax()
-        else: 
-            tree[feature_tmp][value]=CreateTree(data_i,method, prune_method)        
-    return tree
     
     
     
