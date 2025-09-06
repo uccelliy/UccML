@@ -16,11 +16,11 @@ Gradient-based optimization with a general-purpose optimizer
 
 ### Decision Tree
 
-Supports classification（regression *pending*）
+Supports classification (regression *pending*)
 
 Pruning methods (forward, backward) *pending*
 
-Supports multiple Feature Selection Criterion （Gini, information gain, gain ratio）
+Supports multiple Feature Selection Criterion (Gini, information gain, gain ratio)
 
 Full tree construction from scratch, with explainable logic
 
@@ -30,6 +30,8 @@ Gradient Descent (GD)
 
 Stochastic Gradient Descent (SGD) *pending*
 
-Quadratic Programming (QP) placeholder for future extensions *pending*
+Quadratic Programming (QP) *pending*
 
-Designed to be reusable across different algorithms *pending*
+Expectation Maximization(EM) *pending*
+
+Designed to be reusable across different algorithms 
