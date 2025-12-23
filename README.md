@@ -39,7 +39,7 @@ Designed to be reusable across different algorithms
 
 
 
-UccDL is a lightweight deep learning library that implements both basic neural network modules and full neural network architectures. It is designed for learning, experimentation, and extensibility.
+## UccDL is a lightweight deep learning library that implements both basic neural network modules and full neural network architectures. It is designed for learning, experimentation, and extensibility.
 
 
 # Features  
