@@ -35,3 +35,19 @@ Quadratic Programming (QP) *pending*
 Expectation Maximization(EM) *pending*
 
 Designed to be reusable across different algorithms 
+
+
+
+
+UccDL is a lightweight deep learning library that implements both basic neural network modules and full neural network architectures. It is designed for learning, experimentation, and extensibility.
+
+
+# Features  
+## 1. Neural Network Modules  
+Convolutional Neural Networks (CNN)  
+Recurrent Neural Networks (RNN)  
+Attention Mechanisms  
+
+## 2. Neural Network Architectures  
+Transformer  
+GPT-2  
